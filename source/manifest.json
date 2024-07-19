@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Google News Blocker",
   "version": "1.0",
-  "description": "Removes the news tab from Google Search results.",
+  "description": "Allows toggling the visibility of Google News in search results.",
   "permissions": ["activeTab", "scripting", "storage"],
   "background": {
     "service_worker": "background.js"
