@@ -1,24 +1,18 @@
-{
-  "manifest_version": 3,
-  "name": "Google News Blocker",
-  "version": "1.0",
-  "description": "Allows toggling the visibility of Google News in search results.",
-  "permissions": ["activeTab", "scripting", "storage"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://*.google.com/*"],
-      "js": ["content.js"]
+const toggleGoogleNews = () => {
+  chrome.storage.sync.get(['hideNews'], function (data) {
+    if (data.hideNews) {
+      const newsTab = document.querySelector('a.XIzzdf div.YmvwI[aria-current="page"]');
+      if (newsTab && (newsTab.textContent === "News" || newsTab.textContent === "Noticias")) {
+        newsTab.parentElement.style.display = 'none';
+      }
+    } else {
+      const newsTab = document.querySelector('a.XIzzdf div.YmvwI[aria-current="page"]');
+      if (newsTab && (newsTab.textContent === "News" || newsTab.textContent === "Noticias")) {
+        newsTab.parentElement.style.display = '';
+      }
     }
-  ],
-  "icons": {
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon48.png"
-  }
-}
+  });
+};
+
+// Run the function when the DOM content is loaded
+document.addEventListener('DOMContentLoaded', toggleGoogleNews);
